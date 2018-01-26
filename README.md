@@ -1,14 +1,14 @@
 # nn
 
-show "n 日ぶり m 回目"
+Shows "n 日ぶり n 回目"
 
-## install
+## Install
 
 ```bash
 $ go get -u github.com/pankona/nn
 ```
 
-## usage
+## Usage
 
 ```bash
 NAME:
@@ -27,9 +27,9 @@ OPTIONS:
    --version, -v             print the version
 ``` 
 
-## usage example
+## Usage example
 
-* default
+### Default
 
 ```bash
 $ nn
@@ -39,7 +39,7 @@ $ nn
 0 日ぶり 2 回目
 ```
 
-* specify id
+### Specify ID
 
 count is identified by specified "id"
 
@@ -57,9 +57,9 @@ $ nn -id myapp2
 0 日ぶり 2 回目
 ```
 
-* change format
+### Change display format
 
-display format can be changed by specifying "-f" or "--format".
+display format can be changed by specifying "-f" or "--format".  
 it must specify two "%d", like below.
 
 
@@ -68,11 +68,11 @@ $ nn -f "while in %d days, %d time"
 while in 0 days, 4 time
 ```
 
-* reset
+### Reset
 
 nn records are stored on `&HOME/.config/nn/{id}.txt`, just remove it.
 
-## license
+## License
 
 MIT
 
