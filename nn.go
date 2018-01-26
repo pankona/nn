@@ -20,24 +20,24 @@ func getRecord(configDir, id string) *record {
 	b, err := ioutil.ReadFile(filepath.Join(configDir, id+".txt"))
 	r := &record{}
 	if err != nil {
+		fmt.Printf("failed to read config file. err: %s\n", err.Error())
 		return r
 	}
-	fmt.Sscanf(string(b), "{%d,%d}", &r.lastFired, &r.number)
+	_, err = fmt.Sscanf(string(b), "{%d,%d}", &r.lastFired, &r.number)
+	if err != nil {
+		fmt.Printf("failed to get record. err: %s\n", err.Error())
+	}
+
 	return r
 }
 
 func calcDateDelta(last, now int64) int64 {
-	delta := now - last
-	return delta
+	return now - last
 }
 
 func updateRecord(id string, now int64, num int) error {
 	str := fmt.Sprintf("{%d,%d}", now, num)
-	err := ioutil.WriteFile(filepath.Join(getConfigDir(), id+".txt"), []byte(str), 0644)
-	if err != nil {
-		return err
-	}
-	return nil
+	return ioutil.WriteFile(filepath.Join(getConfigDir(), id+".txt"), []byte(str), 0644)
 }
 
 func getConfigDir() string {
@@ -50,7 +50,7 @@ func showDelta(delta int64, num int, format string) error {
 }
 
 func defaultCommand(c *cli.Context) {
-	err := os.MkdirAll(getConfigDir(), 0755)
+	err := os.MkdirAll(getConfigDir(), 0700) // #nosec
 	if err != nil {
 		log.Printf("failed create config directory. err: %s", err.Error())
 		os.Exit(1)
@@ -74,7 +74,7 @@ func defaultCommand(c *cli.Context) {
 
 	err = updateRecord(id, now, last.number+1)
 	if err != nil {
-		fmt.Println("failed to update record. err: %s", err.Error())
+		fmt.Printf("failed to update record. err: %s\n", err.Error())
 		os.Exit(1)
 	}
 
