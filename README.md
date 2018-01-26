@@ -68,6 +68,10 @@ $ nn -f "while in %d days, %d time"
 while in 0 days, 4 time
 ```
 
+* reset
+
+nn records are stored on `&HOME/.config/nn/{id}.txt`, just remove it.
+
 ## license
 
 MIT
